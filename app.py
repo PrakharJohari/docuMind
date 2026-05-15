@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import PyPDFLoader
-from langchain_community.vectorstores import FAISS
+from langchain_community.vectorstores import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_groq import ChatGroq
 
@@ -134,9 +134,13 @@ if uploaded_file:
         )
 
         # Vector Store
-        vectorstore = FAISS.from_documents(
-        docs,
-        embeddings)
+        vectorstore = Chroma.from_documents(
+            docs,
+            embeddings
+        )
+
+        retriever = vectorstore.as_retriever()
+
         # LLM
         llm = ChatGroq(
             groq_api_key=os.getenv("GROQ_API_KEY"),
@@ -188,6 +192,32 @@ if uploaded_file:
             f"""
             <div class="answer-box">
                 {response.content}
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+# History Section
+if st.session_state.history:
+
+    st.markdown("## 🕘 Chat History")
+
+    for item in reversed(st.session_state.history):
+
+        st.markdown(
+            f"""
+            <div class="history-card">
+
+                <p>
+                    <strong>❓ Question:</strong><br>
+                    {item['question']}
+                </p>
+
+                <p>
+                    <strong>🤖 Answer:</strong><br>
+                    {item['answer']}
+                </p>
+
             </div>
             """,
             unsafe_allow_html=True
