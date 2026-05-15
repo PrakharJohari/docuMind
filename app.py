@@ -196,31 +196,6 @@ if uploaded_file:
             unsafe_allow_html=True
         )
 
-# History Section
-if st.session_state.history:
-
-    st.markdown("## 🕘 Chat History")
-
-    for item in reversed(st.session_state.history):
-
-        st.markdown(
-            f"""
-            <div class="history-card">
-
-                <p>
-                    <strong>❓ Question:</strong><br>
-                    {item['question']}
-                </p>
-
-                <p>
-                    <strong>🤖 Answer:</strong><br>
-                    {item['answer']}
-                </p>
-
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
 
 # Footer
 st.markdown("---")

@@ -1,4 +1,12 @@
-faiss-cpu==1.13.2
-numpy==2.4.4
-packaging==26.2
-python-dotenv==1.2.2
+streamlit
+python-dotenv
+langchain
+langchain-community
+langchain-groq
+langchain-huggingface
+langchain-text-splitters
+faiss-cpu
+sentence-transformers
+transformers
+pypdf
+torch
