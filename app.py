@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import PyPDFLoader
-from langchain_community.vectorstores import Chroma
+from langchain_community.vectorstores import FAISS
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_groq import ChatGroq
 
@@ -134,13 +134,9 @@ if uploaded_file:
         )
 
         # Vector Store
-        vectorstore = Chroma.from_documents(
-            docs,
-            embeddings
-        )
-
-        retriever = vectorstore.as_retriever()
-
+        vectorstore = FAISS.from_documents(
+        docs,
+        embeddings)
         # LLM
         llm = ChatGroq(
             groq_api_key=os.getenv("GROQ_API_KEY"),
